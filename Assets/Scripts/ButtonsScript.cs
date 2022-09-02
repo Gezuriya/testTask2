@@ -11,11 +11,11 @@ public class ButtonsScript : MonoBehaviour
         calc = GetComponent<Calculating>();
         resUpd = GetComponent<ResultUpdate>();
     }
-    public void NumberClick(int value)
+    public void ClickNum(string value)
     {
         calc.CalculateNumbs(value);
-        //resUpd.TextUpdating(value.ToString());
-    //    print(value);
+        // resUpd.TextUpdating(value.ToString());
+        // print(value);
     }
 
     public void OperatorClick(string value)
@@ -32,5 +32,10 @@ public class ButtonsScript : MonoBehaviour
     public void Clear()
     {
         calc.ClearingNums();
+    }
+    public void ExitButton()
+    {
+        calc.Save();
+        Application.Quit();
     }
 }

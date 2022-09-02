@@ -1,46 +1,52 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Calculating : MonoBehaviour
 {
-    int result, num1, num2, showingNum;
+    int result;
     string operatorValue;
+    string num1, num2, showingNum;
     ResultUpdate resUpd;
 
     private void Start()
     {
         resUpd = GetComponent<ResultUpdate>();
+        Load();
     }
-
-    public void CalculateNumbs(int numValue)
+    public void CalculateNumbs(string numValue)
     {
-        if (operatorValue == null)
+        if (operatorValue == null && Convert.ToInt32(num1 + numValue) <= Int32.MaxValue)
         {
-            num1 = numValue;
+            num1 += numValue;
             showingNum = num1;
         }
-        else if (num1 != 0 && operatorValue != null)
+        else if (num1 != null && operatorValue != null && Convert.ToInt32(num2 + numValue) <= Int32.MaxValue)
         {
-            num2 = numValue;
+            num2 += numValue;
             showingNum = num2;
         }
 
         print("num1 " + num1);
         print("num2 " + num2);
-        resUpd.TextUpdating(showingNum.ToString());
+        resUpd.TextUpdating(showingNum);
     }
     public void OperatorSign(string operatorInput)
     {
-        if (num1 != 0)
+        if (num1 != null)
             operatorValue = operatorInput;
+
+        resUpd.OperatorUpdating(operatorValue);
     }
     public void ClearingNums()
     {
-        num1 = 0;
-        num2 = 0;
+        num1 = null;
+        num2 = null;
         result = 0;
+        operatorValue = null;
         resUpd.TextUpdating(null);
+        resUpd.OperatorUpdating(null);
     }
 
     public void Result()
@@ -48,22 +54,35 @@ public class Calculating : MonoBehaviour
         switch (operatorValue)
         {
             case "+":
-                result = num1 + num2;
+                result = Convert.ToInt32(num1) + Convert.ToInt32(num2);
                 break;
             case "-":
-                result = num1 - num2;
+                result = Convert.ToInt32(num1) - Convert.ToInt32(num2);
                 break;
             case "*":
-                result = num1 * num2;
+                result = Convert.ToInt32(num1) * Convert.ToInt32(num2);
                 break;
             case "/":
-                result = num1 / num2;
+                result = Convert.ToInt32(num1) / Convert.ToInt32(num2);
                 break;
         }
+        if (result<0|| result>=Int32.MaxValue )
+        {
+            result = 0;
+        }
         resUpd.TextUpdating(result.ToString());
+        resUpd.OperatorUpdating(null);
         operatorValue = null;
-        num1 = 0;
-        num2 = 0;
-        result = 0;
+        num1 = result.ToString();
+        num2 = null;
+     //   result = 0;
+    }
+    public void Save()
+    {
+
+    }
+    public void Load()
+    {
+       
     }
 }
