@@ -35,7 +35,6 @@ public class ButtonsScript : MonoBehaviour
     }
     public void ExitButton()
     {
-        calc.Save();
         Application.Quit();
     }
 }

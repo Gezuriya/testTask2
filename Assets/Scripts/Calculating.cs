@@ -27,9 +27,6 @@ public class Calculating : MonoBehaviour
             num2 += numValue;
             showingNum = num2;
         }
-
-        print("num1 " + num1);
-        print("num2 " + num2);
         resUpd.TextUpdating(showingNum);
     }
     public void OperatorSign(string operatorInput)
@@ -74,15 +71,40 @@ public class Calculating : MonoBehaviour
         resUpd.OperatorUpdating(null);
         operatorValue = null;
         num1 = result.ToString();
+        result = 0;
         num2 = null;
      //   result = 0;
     }
-    public void Save()
+    private void OnApplicationQuit()
     {
-
+        PlayerPrefs.DeleteAll();
+        PlayerPrefs.SetString("num1", num1);
+        PlayerPrefs.SetString("num2", num2);
+        PlayerPrefs.SetString("oper", operatorValue);
+     //   PlayerPrefs.SetString("res", result.ToString());
     }
     public void Load()
     {
-       
+        if (PlayerPrefs.HasKey("num1"))
+        {
+            num1 = PlayerPrefs.GetString("num1");
+            resUpd.TextUpdating(num1);
+            print(num1 + " num1");
+            if (PlayerPrefs.HasKey("oper") && num1 != "")
+            {
+                operatorValue = PlayerPrefs.GetString("oper");
+                resUpd.OperatorUpdating(operatorValue);
+                print(operatorValue + " oper");
+                if (PlayerPrefs.HasKey("num2") && operatorValue != "")
+                {
+                    num2 = PlayerPrefs.GetString("num2");
+                    if(num2 != "")
+                    {
+                        resUpd.TextUpdating(num2);
+                    }
+                    print(num2 + " num2");
+                }
+            }
+        }
     }
 }
