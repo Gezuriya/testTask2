@@ -37,4 +37,16 @@ public class ButtonsScript : MonoBehaviour
     {
         Application.Quit();
     }
+
+    private void OnApplicationPause(bool pause)
+    {
+        if (pause)
+        {
+            calc.Save();
+        }
+    }
+    private void OnApplicationQuit()
+    {
+        calc.Save();
+    }
 }

@@ -75,13 +75,13 @@ public class Calculating : MonoBehaviour
         num2 = null;
      //   result = 0;
     }
-    private void OnApplicationQuit()
+
+    public void Save()
     {
         PlayerPrefs.DeleteAll();
         PlayerPrefs.SetString("num1", num1);
         PlayerPrefs.SetString("num2", num2);
         PlayerPrefs.SetString("oper", operatorValue);
-     //   PlayerPrefs.SetString("res", result.ToString());
     }
     public void Load()
     {
